@@ -2,7 +2,7 @@ import { Random, lerrcode } from '../config'
 import { CheckApi } from '../URL'
 import { } from '@/util/util'
 
-const permissionList = ['xmgl', 'yygl', 'yggl', 'wdrw'];    // 默认需要权限的菜单
+const permissionList = ['WarehouseManage', 'User', 'GoodsManage', 'RoleManage'];    // 默认需要权限的菜单
 
 export default [
     // 登录

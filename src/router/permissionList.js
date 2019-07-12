@@ -1,31 +1,31 @@
 export default [
     {
-        path: '/xmgl',
-        name: 'xmgl',
-        component: () => import('@/pages/xmgl/index'),
+        path: '/user',
+        name: 'User',
+        component: () => import('@/pages/User/index'),
         meta: {
             requireAuth: true,
         }
     },
     {
-        path: '/yygl',
-        name: 'yygl',
-        component: () => import('@/pages/yygl/index'),
+        path: '/WarehouseManage',
+        name: 'WarehouseManage',
+        component: () => import('@/pages/WarehouseManage/index'),
         meta: {
             requireAuth: true,
         }
     },
     {
-        path: '/yggl',
-        name: 'yggl',
-        component: () => import('@/pages/yggl/index'),
+        path: '/GoodsManage',
+        name: 'GoodsManage',
+        component: () => import('@/pages/GoodsManage/index'),
         meta: {
             requireAuth: true,
         }
     },
     {
-        path: '/wdrw',
-        name: 'wdrw',
-        component: () => import('@/pages/wdrw/index')
+        path: '/RoleManage',
+        name: 'RoleManage',
+        component: () => import('@/pages/RoleManage/index')
     },
 ]
