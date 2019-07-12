@@ -20,6 +20,11 @@ const routes = [
         component: () => import('@/views/login'),
     },
     {
+        path: '/adminLogin',
+        name: 'adminLogin',
+        component: () => import('@/views/adminLogin'),
+    },
+    {
         path: '*',
         name: '404',
         component: () => import('@/pages/errPages/404'),

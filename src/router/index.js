@@ -29,6 +29,11 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
 
     if (isEmpty(user) || isEmpty(user.yhid)) {
         if (to.name === 'login') {
+            document.title = '登录';
+            next()
+        }
+        else if (to.name === 'adminLogin') {
+            document.title = '管理员登录';
             next()
         }
         else {
@@ -40,6 +45,10 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
         if (to.name === 'login') {
             next({path: '/'})
             document.title = '登录';
+        }
+        else if (to.name === 'adminLogin') {
+            next({path: '/adminLogin'})
+            document.title = '管理员登录'
         }
         else {
             // 当刷新时重新添加动态路由
