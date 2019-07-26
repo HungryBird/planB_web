@@ -32,7 +32,7 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
             document.title = '登录';
             next()
         }
-        else if (to.name === 'adminLogin') { 
+        else if (to.name === 'adminLogin') {
             document.title = '管理员登录';
             next()
         }

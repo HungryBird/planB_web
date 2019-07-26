@@ -145,6 +145,7 @@ export default {
                     this.loading = true;
                     const { username, password } = this.loginForm;
                     ajax.Login({username, pwd: password}).then((res) =>{
+                        console.log('login: ', res);
                         if (res.errcode === 200) {
                             const user = res.user;
                             this.$store.dispatch('loginInit', user).then(() => {

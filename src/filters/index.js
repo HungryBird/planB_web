@@ -3,10 +3,10 @@ import { XM } from '@/enumeration'
 export const f_cd = (value) => {
     const obj = {
         'home': '主页',
-        'yygl': '医院管理',
-        'xmgl': '项目管理',
-        'yggl': '员工管理',
-        'wdrw': '我的任务',
+        'WarehouseManage': '仓库管理',
+        'User': '用户管理',
+        'GoodsManage': '商品管理',
+        'RoleManage': '角色管理',
     }
     return obj[value]
 }
