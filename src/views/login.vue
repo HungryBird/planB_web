@@ -41,17 +41,17 @@
                     </span>
                 </el-form-item>
             </el-tooltip>
-            <el-row :gutter="22">
-                <el-col :span="15">
+            <el-row :gutter="0">
+                <el-col :span="19">
                     <el-form-item prop="Verification">
                         <el-input
                         placeholder="请输入验证码"
                         v-model="loginForm.Verification" />
                     </el-form-item>
                 </el-col>
-                <el-col :span="9">
+                <el-col :span="5">
                     <el-tooltip content="点击切换验证码">
-                        <el-image :src="verificationImg" @click="getVerificationImg" fit="contain">
+                        <el-image :src="verificationImg" @click="getVerificationImg" fit="contain" style="height: 47px;width: 100%;">
                         </el-image>
                     </el-tooltip>
                 </el-col>
@@ -147,7 +147,10 @@ export default {
         getVerificationImg() {
             const date = new Date();
             const stamp = date.getTime();
-            this.verificationImg = `/api/CaptCha/UserLogin?stamp=${stamp}`
+            ajax.captChaUser({stamp}).then(res => {
+                this.verificationImg = res;
+            })
+            // this.verificationImg = `/api/CaptCha/UserLogin?stamp=${stamp}`
         },
         checkCapslock({ shiftKey, key } = {}) {
             if (key && key.length === 1) {

@@ -4,13 +4,13 @@
             <div class="title-container">
                 <h3 class="title">管理员登陆页面</h3>
             </div>
-            <el-form-item prop="username">
+            <el-form-item prop="Name">
                 <span class="svg-container">
                     <font-awesome-icon :icon="['fas', 'user']" />
                 </span>
                 <el-input
                     ref="username"
-                    v-model="loginForm.username"
+                    v-model="loginForm.Name"
                     placeholder="用户名"
                     name="username"
                     type="text"
@@ -18,15 +18,15 @@
                     autocomplete="on"
                 />
             </el-form-item>
-            <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-                <el-form-item prop="password">
+            <el-tooltip v-model="capsTooltip" content="大写锁定打开" placement="right" manual>
+                <el-form-item prop="Password">
                     <span class="svg-container">
                     <font-awesome-icon :icon="['fas', 'lock']" />
                     </span>
                     <el-input
                     :key="passwordType"
                     ref="password"
-                    v-model="loginForm.password"
+                    v-model="loginForm.Password"
                     :type="passwordType"
                     placeholder="密码"
                     name="password"
@@ -41,6 +41,21 @@
                     </span>
                 </el-form-item>
             </el-tooltip>
+            <el-row :gutter="0">
+                <el-col :span="19">
+                    <el-form-item prop="Verification">
+                        <el-input
+                        placeholder="请输入验证码"
+                        v-model="loginForm.Verification" />
+                    </el-form-item>
+                </el-col>
+                <el-col :span="5">
+                    <el-tooltip content="点击切换验证码">
+                        <el-image :src="verificationImg" @click="getVerificationImg" fit="contain" style="height: 47px;width: 100%;">
+                        </el-image>
+                    </el-tooltip>
+                </el-col>
+            </el-row>
             <div style="margin-bottom: 30px;text-align: left;">
                 <el-checkbox v-model="remeber" @change="toRemeber">记住密码</el-checkbox>
             </div>
@@ -58,7 +73,7 @@
 </template>
 
 <script>
-import ajax from '@/api/login/admin'
+import ajax from '@/api/login/index'
 import SocialSign from './components/SocialSignin'
 
 export default {
@@ -72,14 +87,24 @@ export default {
                 callback()
             }
         }
+        const validateVerification = (rule, value, callback) => {
+            if (value.length !== 4) {
+                callback(new Error('验证码长度为4位'))
+            }
+            else {
+                callback();
+            }
+        }
         return {
             loginForm: {
-                username: '',
-                password: ''
+                Name: '',
+                Password: '',
+                Verification: '',
             },
             loginRules: {
-                username: [{ required: true, trigger: 'blur', message: '账号不能为空' }],
-                password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+                Name: [{ required: true, trigger: 'blur', message: '账号不能为空' }],
+                Password: [{ required: true, trigger: 'blur', validator: validatePassword }],
+                Verification: [{required: true, trigger: 'blur', validator: validateVerification}]
             },
             passwordType: 'password',
             capsTooltip: false,
@@ -88,6 +113,7 @@ export default {
             redirect: undefined,
             otherQuery: {},
             remeber: false,
+            verificationImg: '',
         }
     },
     watch: {
@@ -112,11 +138,20 @@ export default {
         } else if (this.loginForm.password === '') {
             this.$refs.password.focus()
         }
+        this.getVerificationImg();
     },
     destroyed() {
         // window.removeEventListener('storage', this.afterQRScan)
     },
     methods: {
+        getVerificationImg() {
+            const date = new Date();
+            const stamp = date.getTime();
+            ajax.captChaUser({stamp}).then(res => {
+                this.verificationImg = res;
+            })
+            // this.verificationImg = `/api/CaptCha/UserLogin?stamp=${stamp}`
+        },
         checkCapslock({ shiftKey, key } = {}) {
             if (key && key.length === 1) {
                 if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
@@ -143,14 +178,17 @@ export default {
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
                     this.loading = true;
-                    const { username, password } = this.loginForm;
-                    ajax.AdminLogin({username, pwd: password}).then((res) =>{
-                        if (res.errcode === 200) {
-                            const user = res.user;
-                            this.$store.dispatch('loginInit', user).then(() => {
+                    ajax.AdminLogin(this.loginForm).then((res) =>{
+                        if (res.Success) {
+                            const data = {
+                                Modular: res.Modular,
+                                Id: res.Id,
+                                Name: this.loginForm.Name,
+                            }
+                            this.$store.dispatch('loginInit', data).then(() => {
                                 try{
                                     this.$router.push('/');
-                                    this.$message.success(res.message);
+                                    this.$message.success(res.Msg);
                                 }
                                 catch(err) {
                                     console.error(err);
@@ -160,7 +198,7 @@ export default {
                             })
                         }
                         else {
-                            this.$message.error(res.message);
+                            this.$message.error(res.Msg);
                         }
                         this.loading = false;
                     })

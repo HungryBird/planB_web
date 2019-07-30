@@ -45,7 +45,7 @@ export default [
     },
     // 用户验证码
     {
-        method() {
+        method(data) {
             return Random.image('200x100', '#4A7BF7', 'Hello');
         },
         url: '/api/CaptCha/UserLogin',
