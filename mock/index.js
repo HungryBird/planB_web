@@ -4,14 +4,12 @@ import { toLowerCase } from '@/util/util'
 
 import login from './login'
 import dash from './dash'
-import xmgl from './xmgl'
-import yh from './yh'
+import role from './role'
 
 const mocks = [
     ...login,
     ...dash,
-    ...xmgl,
-    ...yh,
+    ...role,
 ]
 
 mocks.forEach((item) => {

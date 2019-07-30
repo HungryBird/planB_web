@@ -1,3 +1,6 @@
-export const CheckApi = '/api/CheckApi/'
-export const Xm = '/api/Xm/'
+export const role = '/api/RoleManage/'
 export const Yh = '/api/Yh/'
+
+export const Success = true
+export const Msg = 'success'
+export const Total = 10
