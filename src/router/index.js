@@ -26,8 +26,7 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
         const { query, params } = to;
         store.commit('setRouter', {query, params});
     }
-
-    if (isEmpty(user) || isEmpty(user.yhid)) {
+    if (isEmpty(user) || isEmpty(user.Name)) {
         if (to.name === 'login') {
             document.title = '登录';
             next()
@@ -55,6 +54,7 @@ router.beforeEach((to, from, next) => { // 初次登陆自动跳转到login
             if (isEmpty(store.getters.getId)) {
                 store.dispatch('afterRefresh', user).then(() => {
                     const { query, params } = store.getters.getRouter;
+                    store.commit('initId', user.Id);
                     // 重新加入query和params
                     next({path: `${to.path}`, query, params}, )  // 重新进入beforeEach
                 })

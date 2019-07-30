@@ -8,20 +8,20 @@ const mutations = {
         _state.token = data.token;
         setToken(data.token, data.expires);
     },
-    setUser(_state, data) { // 保存user
-        _state.user = data;
-        setSession('user', data); // 不清楚为什么state.user无法同步更新
+    setUser(_state, user) {
+        _state.user = user;
+        setSession('user', user); // 不清楚为什么state.Name无法同步更新
     },
-    setPermissionList(_state, data) {
-        const cd = data.cd;
+    setPermissionList(_state, Modular) {
         const asyncRouter = permissionList.filter((route) => {
-            return cd.indexOf(route.name) !== -1;
+            return Modular.indexOf(route.name) !== -1;
         })
         parent.children = [...asyncRouter, ...parent.children];
+        console.log('parent: ', parent);
         router.addRoutes([parent])
     },
-    initId(_state, yhid) {
-        _state.yhid = yhid;
+    initId(_state, Id) {
+        _state.Id = Id; // 初始化Id
     },
     loginOut(_state) {
         removeSession('user');

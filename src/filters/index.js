@@ -2,7 +2,6 @@ import { XM } from '@/enumeration'
 
 export const f_cd = (value) => {
     const obj = {
-        'home': '主页',
         'WarehouseManage': '仓库管理',
         'User': '用户管理',
         'GoodsManage': '商品管理',

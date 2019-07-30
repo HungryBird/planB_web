@@ -3,7 +3,7 @@
         <el-menu-item index="dash">
             主页
         </el-menu-item>
-        <el-menu-item v-for="pl in getUser.cd" :key="pl" :index="pl">
+        <el-menu-item v-for="pl in getUser.Modular" :key="pl" :index="pl">
             {{ pl | f_cd }}
         </el-menu-item>
         <el-submenu index="sz">

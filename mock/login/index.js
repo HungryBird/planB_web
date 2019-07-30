@@ -1,6 +1,4 @@
-import { Random, lerrcode } from '../config'
-import { CheckApi } from '../URL'
-import { } from '@/util/util'
+import { Random, Success, Msg } from '../config'
 
 const permissionList = ['WarehouseManage', 'User', 'GoodsManage', 'RoleManage'];    // 默认需要权限的菜单
 
@@ -8,26 +6,49 @@ export default [
     // 登录
     {
         method() { 
-            const yhid = Random.natural();
-            const yhsj = Random.natural(11);
-            const yhxm = Random.cname();
-            const cd = permissionList;
-        
-            // const expires = Random.integer(1, 9);
-            const user = {
-                yhid,
-                yhsj,
-                yhxm,
-                cd,
-                // expires,
-            }
+            const Id = Random.natural();
+            const Modular = permissionList;
+
             return {
-                errcode: lerrcode, 
-                user,
-                message: '登陆成功',
+                Id,
+                Modular,
+                Success,
+                Msg
             }
         },
-        url: `${CheckApi}Login`,
+        url: '/api/User/Login',
         type: 'post',
+    },
+    // 管理员登录
+    {
+        method() { 
+            const Id = Random.natural();
+            const Modular = permissionList;
+
+            return {
+                Id,
+                Modular,
+                Success,
+                Msg
+            }
+        },
+        url: '/api/AdminLogin/AdminLogin',
+        type: 'post',
+    },
+    // 管理员验证码
+    {
+        method() {
+            return Random.image('200x100', '#4A7BF7', 'Hello');
+        },
+        url: '/api/CaptCha/AdminLogin',
+        type: 'get',
+    },
+    // 用户验证码
+    {
+        method() {
+            return Random.image('200x100', '#4A7BF7', 'Hello');
+        },
+        url: '/api/CaptCha/UserLogin',
+        type: 'get',
     },
 ]

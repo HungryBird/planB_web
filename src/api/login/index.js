@@ -2,7 +2,10 @@ import { axiosHttp } from '@/util/ajax'
 
 export default {
     Login(option, headers = {}) {
-        return axiosHttp('/api/CheckApi/Login', 'post', option, headers);
+        return axiosHttp('/api/User/Login', 'post', option, headers);
+    },
+    AdminLogin(option, headers = {}) {
+        return axiosHttp('/api/AdminLogin/AdminLogin', 'post', option, headers);
     },
     test(option, headers = {}) {
         return axiosHttp('/test', 'get', option, headers);
